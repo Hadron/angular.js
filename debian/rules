@@ -46,7 +46,7 @@ override_dh_auto_build:
 			-e 's/"NG_VERSION_CODENAME"/$(CODENAME)/' \
 				>$(CURDIR)/debian/build/angular.js
 	# angular.min.js
-	#uglifyjs $(CURDIR)/debian/build/angular.js \
+	uglifyjs $(CURDIR)/debian/build/angular.js \
 		>$(CURDIR)/debian/build/angular.min.js
 
 	# angular-animate.js
@@ -55,7 +55,7 @@ override_dh_auto_build:
 		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
 			>$(CURDIR)/debian/build/angular-animate.js
 	# angular-animate.min.js
-	#uglifyjs $(CURDIR)/debian/build/angular-animate.js \
+	uglifyjs $(CURDIR)/debian/build/angular-animate.js \
 		>$(CURDIR)/debian/build/angular-animate.min.js
 
 	# angular-aria.js
@@ -64,7 +64,7 @@ override_dh_auto_build:
 		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
 			>$(CURDIR)/debian/build/angular-aria.js
 	# angular-aria.min.js
-	#uglifyjs $(CURDIR)/debian/build/angular-aria.js \
+	uglifyjs $(CURDIR)/debian/build/angular-aria.js \
 		>$(CURDIR)/debian/build/angular-aria.min.js
 
 	# angular-cookies.js
@@ -73,7 +73,7 @@ override_dh_auto_build:
 		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
 			>$(CURDIR)/debian/build/angular-cookies.js
 	# angular-cookies.min.js
-	#uglifyjs $(CURDIR)/debian/build/angular-cookies.js \
+	uglifyjs $(CURDIR)/debian/build/angular-cookies.js \
 		>$(CURDIR)/debian/build/angular-cookies.min.js
 
 	# angular-messages.js
@@ -82,7 +82,7 @@ override_dh_auto_build:
 		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
 			>$(CURDIR)/debian/build/angular-messages.js
 	# angular-messages.min.js
-	#uglifyjs $(CURDIR)/debian/build/angular-messages.js \
+	uglifyjs $(CURDIR)/debian/build/angular-messages.js \
 		>$(CURDIR)/debian/build/angular-messages.min.js
 
 	# angular-mocks.js
@@ -91,7 +91,7 @@ override_dh_auto_build:
 		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
 			>$(CURDIR)/debian/build/angular-mocks.js
 	# angular-mocks.min.js
-	#uglifyjs $(CURDIR)/debian/build/angular-mocks.js \
+	uglifyjs $(CURDIR)/debian/build/angular-mocks.js \
 		>$(CURDIR)/debian/build/angular-mocks.min.js
 
 	# angular-resource.js
@@ -100,7 +100,7 @@ override_dh_auto_build:
 		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
 			>$(CURDIR)/debian/build/angular-resource.js
 	# angular-resource.min.js
-	#uglifyjs $(CURDIR)/debian/build/angular-resource.js \
+	uglifyjs $(CURDIR)/debian/build/angular-resource.js \
 		>$(CURDIR)/debian/build/angular-resource.min.js
 
 	# angular-route.js
@@ -115,7 +115,7 @@ override_dh_auto_build:
 		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
 			>$(CURDIR)/debian/build/angular-route.js
 	# angular-route.min.js
-	#uglifyjs $(CURDIR)/debian/build/angular-route.js \
+	uglifyjs $(CURDIR)/debian/build/angular-route.js \
 		>$(CURDIR)/debian/build/angular-route.min.js
 
 	# angular-sanitize.js
@@ -127,7 +127,7 @@ override_dh_auto_build:
 		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
 			>$(CURDIR)/debian/build/angular-sanitize.js
 	# angular-sanitize.min.js
-	#uglifyjs $(CURDIR)/debian/build/angular-sanitize.js \
+	uglifyjs $(CURDIR)/debian/build/angular-sanitize.js \
 		>$(CURDIR)/debian/build/angular-sanitize.min.js
 
 	# angular-touch.js
@@ -139,7 +139,7 @@ override_dh_auto_build:
 		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
 			>$(CURDIR)/debian/build/angular-touch.js
 	# angular-touch.min.js
-	#uglifyjs $(CURDIR)/debian/build/angular-touch.js \
+	uglifyjs $(CURDIR)/debian/build/angular-touch.js \
 		>$(CURDIR)/debian/build/angular-touch.min.js
 
 	# angular-loader.js
@@ -154,7 +154,7 @@ override_dh_auto_build:
 		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
 			>$(CURDIR)/debian/build/angular-loader.js
 	# angular-loader.min.js
-	#uglifyjs $(CURDIR)/debian/build/angular-loader.js \
+	uglifyjs $(CURDIR)/debian/build/angular-loader.js \
 		>$(CURDIR)/debian/build/angular-loader.min.js
 
 	# angular-scenario.js
