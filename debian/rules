@@ -8,7 +8,7 @@ CODENAME=$(shell sed '2q;d' CHANGELOG.md | cut -d" " -f3)
 CODENAME=shallow-translucence
 #VERSION=$(shell grep version package.json | cut -d\" -f4)
 VERSION=$(shell head -1 CHANGELOG.md | grep -o [0-9\.]*)
-VERSION=1.3.20
+VERSION=1.5.2
 #CDNVERSION=$(shell grep cdnVersion package.json | grep -o [0-9\.]*)
 CDNVERSION=1.3.19
 MAJOR=$(shell echo $(VERSION) | cut -d. -f1)
@@ -23,10 +23,13 @@ PKGDIR=$(CURDIR)/debian/libjs-angularjs
 override_dh_clean:
 	dh_clean
 	rm -f $(CURDIR)/smash-*
+	rm -f $(CURDIR)/debian/smash-*
 	rm -rf $(CURDIR)/debian/build/
 
 override_dh_auto_build:
 	install -d $(CURDIR)/debian/build/
+
+	nodejs debian/make-smashfiles.js
 
 	# angular.js
 	(cat $(CURDIR)/src/angular.prefix && \
