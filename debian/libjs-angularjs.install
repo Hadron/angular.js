@@ -1,0 +1,5 @@
+debian/build/*.js		/usr/share/javascript/angular.js/
+debian/build/angular-csp.css	/usr/share/javascript/angular.js/
+debian/build/version.*		/usr/share/javascript/angular.js/
+debian/errors.json		/usr/share/javascript/angular.js/
+src/ngLocale/*			/usr/share/javascript/angular.js/i18n/

@@ -1,0 +1,186 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+CODENAME=$(shell sed '2q;d' CHANGELOG.md | cut -d" " -f3)
+CODENAME=shallow-translucence
+#VERSION=$(shell grep version package.json | cut -d\" -f4)
+VERSION=$(shell head -1 CHANGELOG.md | grep -o [0-9\.]*)
+VERSION=1.3.20
+#CDNVERSION=$(shell grep cdnVersion package.json | grep -o [0-9\.]*)
+CDNVERSION=1.3.19
+MAJOR=$(shell echo $(VERSION) | cut -d. -f1)
+MINOR=$(shell echo $(VERSION) | cut -d. -f2)
+DOT=$(shell echo $(VERSION) | cut -d. -f3)
+CDNMAJOR=$(shell echo $(CDNVERSION) | cut -d. -f1)
+CDNMINOR=$(shell echo $(CDNVERSION) | cut -d. -f2)
+CDNDOT=$(shell echo $(CDNVERSION) | cut -d. -f3)
+
+PKGDIR=$(CURDIR)/debian/libjs-angularjs
+
+override_dh_clean:
+	dh_clean
+	rm -f $(CURDIR)/smash-*
+	rm -rf $(CURDIR)/debian/build/
+
+override_dh_auto_build:
+	install -d $(CURDIR)/debian/build/
+
+	# angular.js
+	(cat $(CURDIR)/src/angular.prefix && \
+		echo \'use strict\'\;) \
+			>$(CURDIR)/debian/build/angular.js-head
+	ln -s $(CURDIR)/debian/smash-angularSrc.js $(CURDIR)
+	smash $(CURDIR)/smash-angularSrc.js | egrep -v 'use strict' \
+		>$(CURDIR)/debian/build/angular.js-body
+	cat $(CURDIR)/debian/build/angular.js-head \
+		$(CURDIR)/debian/build/angular.js-body \
+		$(CURDIR)/src/angular.suffix \
+		$(CURDIR)/debian/angular.css | \
+		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
+			-e 's/"NG_VERSION_MAJOR"/$(MAJOR)/' \
+			-e 's/"NG_VERSION_MINOR"/$(MINOR)/' \
+			-e 's/"NG_VERSION_DOT"/$(DOT)/' \
+			-e 's/"NG_VERSION_CODENAME"/$(CODENAME)/' \
+				>$(CURDIR)/debian/build/angular.js
+	# angular.min.js
+	#uglifyjs $(CURDIR)/debian/build/angular.js \
+		>$(CURDIR)/debian/build/angular.min.js
+
+	# angular-animate.js
+	ln -s $(CURDIR)/debian/smash-ngAnimate.js $(CURDIR)
+	smash $(CURDIR)/smash-ngAnimate.js | \
+		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
+			>$(CURDIR)/debian/build/angular-animate.js
+	# angular-animate.min.js
+	#uglifyjs $(CURDIR)/debian/build/angular-animate.js \
+		>$(CURDIR)/debian/build/angular-animate.min.js
+
+	# angular-aria.js
+	ln -s $(CURDIR)/debian/smash-ngAria.js $(CURDIR)
+	smash $(CURDIR)/smash-ngAria.js | \
+		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
+			>$(CURDIR)/debian/build/angular-aria.js
+	# angular-aria.min.js
+	#uglifyjs $(CURDIR)/debian/build/angular-aria.js \
+		>$(CURDIR)/debian/build/angular-aria.min.js
+
+	# angular-cookies.js
+	ln -s $(CURDIR)/debian/smash-ngCookies.js $(CURDIR)
+	smash $(CURDIR)/smash-ngCookies.js | \
+		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
+			>$(CURDIR)/debian/build/angular-cookies.js
+	# angular-cookies.min.js
+	#uglifyjs $(CURDIR)/debian/build/angular-cookies.js \
+		>$(CURDIR)/debian/build/angular-cookies.min.js
+
+	# angular-messages.js
+	ln -s $(CURDIR)/debian/smash-ngMessages.js $(CURDIR)
+	smash $(CURDIR)/smash-ngMessages.js | \
+		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
+			>$(CURDIR)/debian/build/angular-messages.js
+	# angular-messages.min.js
+	#uglifyjs $(CURDIR)/debian/build/angular-messages.js \
+		>$(CURDIR)/debian/build/angular-messages.min.js
+
+	# angular-mocks.js
+	ln -s $(CURDIR)/debian/smash-ngMock.js $(CURDIR)
+	smash $(CURDIR)/smash-ngMock.js | \
+		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
+			>$(CURDIR)/debian/build/angular-mocks.js
+	# angular-mocks.min.js
+	#uglifyjs $(CURDIR)/debian/build/angular-mocks.js \
+		>$(CURDIR)/debian/build/angular-mocks.min.js
+
+	# angular-resource.js
+	ln -s $(CURDIR)/debian/smash-ngResource.js $(CURDIR)
+	smash $(CURDIR)/smash-ngResource.js | \
+		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
+			>$(CURDIR)/debian/build/angular-resource.js
+	# angular-resource.min.js
+	#uglifyjs $(CURDIR)/debian/build/angular-resource.js \
+		>$(CURDIR)/debian/build/angular-resource.min.js
+
+	# angular-route.js
+	ln -s $(CURDIR)/debian/smash-ngRoute.js $(CURDIR)
+	(cat $(CURDIR)/src/module.prefix && \
+		echo \'use strict\'\;) \
+			>$(CURDIR)/debian/build/angular.js-module_head
+	smash $(CURDIR)/smash-ngRoute.js | egrep -v 'use strict' \
+		>$(CURDIR)/debian/build/angular.js-route_body
+	cat $(CURDIR)/debian/build/angular.js-module_head \
+		$(CURDIR)/debian/build/angular.js-route_body | \
+		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
+			>$(CURDIR)/debian/build/angular-route.js
+	# angular-route.min.js
+	#uglifyjs $(CURDIR)/debian/build/angular-route.js \
+		>$(CURDIR)/debian/build/angular-route.min.js
+
+	# angular-sanitize.js
+	ln -s $(CURDIR)/debian/smash-ngSanitize.js $(CURDIR)
+	smash $(CURDIR)/smash-ngSanitize.js | egrep -v 'use strict' \
+		>$(CURDIR)/debian/build/angular.js-sanitize_body
+	cat $(CURDIR)/debian/build/angular.js-module_head \
+		$(CURDIR)/debian/build/angular.js-sanitize_body | \
+		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
+			>$(CURDIR)/debian/build/angular-sanitize.js
+	# angular-sanitize.min.js
+	#uglifyjs $(CURDIR)/debian/build/angular-sanitize.js \
+		>$(CURDIR)/debian/build/angular-sanitize.min.js
+
+	# angular-touch.js
+	ln -s $(CURDIR)/debian/smash-ngTouch.js $(CURDIR)
+	smash $(CURDIR)/smash-ngTouch.js | egrep -v 'use strict' \
+		>$(CURDIR)/debian/build/angular.js-touch_body
+	cat $(CURDIR)/debian/build/angular.js-module_head \
+		$(CURDIR)/debian/build/angular.js-touch_body | \
+		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
+			>$(CURDIR)/debian/build/angular-touch.js
+	# angular-touch.min.js
+	#uglifyjs $(CURDIR)/debian/build/angular-touch.js \
+		>$(CURDIR)/debian/build/angular-touch.min.js
+
+	# angular-loader.js
+	ln -s $(CURDIR)/debian/smash-angularLoader.js $(CURDIR)
+	((cat $(CURDIR)/src/loader.prefix | egrep -v  'use strict') && \
+		echo \'use strict\'\;) \
+			>$(CURDIR)/debian/build/angular.js-loader_head
+	smash $(CURDIR)/smash-angularLoader.js | egrep -v 'use strict' \
+		>$(CURDIR)/debian/build/angular.js-loader_body
+	cat $(CURDIR)/debian/build/angular.js-loader_head \
+		$(CURDIR)/debian/build/angular.js-loader_body | \
+		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
+			>$(CURDIR)/debian/build/angular-loader.js
+	# angular-loader.min.js
+	#uglifyjs $(CURDIR)/debian/build/angular-loader.js \
+		>$(CURDIR)/debian/build/angular-loader.min.js
+
+	# angular-scenario.js
+# Do not build for two reasons:
+# - needs a much newer jQuery (2.1.1) that is in the archives
+# - going to be deprecated soon in favor of protractor
+#	ln -s $(CURDIR)/debian/smash-angularScenario.js $(CURDIR)
+#	smash $(CURDIR)/smash-angularScenario.js | egrep -v 'use strict' \
+#		>$(CURDIR)/debian/build/angular.js-scenario_body
+#		cat $(CURDIR)/debian/build/angular.js-scenario_body | \
+#		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
+#			>$(CURDIR)/debian/build/angular-scenario.js
+	# angular-scenario.min.js
+#	uglifyjs $(CURDIR)/debian/build/angular-scenario.js \
+#		>$(CURDIR)/debian/build/angular-scenario.min.js
+
+	# CSP css
+	cat $(CURDIR)/debian/angular-csp.css_head $(CURDIR)/css/angular.css \
+		>$(CURDIR)/debian/build/angular-csp.css
+
+	# version informations
+	echo -n $(VERSION) >$(CURDIR)/debian/build/version.txt
+	echo -n '{"raw":"v$(VERSION)","major":$(MAJOR),"minor":$(MINOR),"patch":$(DOT),"prerelease":[],"build":[],"version":"$(VERSION)","codeName":"$(CODENAME)","full":"$(VERSION)","branch":"v1.3.x","cdn":{"raw":"v$(CDNVERSION)","major":$(CDNMAJOR),"minor":$(CDNMINOR),"patch":$(CDNDOT),"prerelease":[],"build":[],"version":"$(CDNVERSION)","docsUrl":"http://code.angularjs.org/$(CDNVERSION)/docs"}}' \
+		>$(CURDIR)/debian/build/version.json
+
+%:
+	dh $@
+
+.PHONY: override_dh_clean override_dh_auto_build
