@@ -36,7 +36,7 @@ override_dh_auto_build:
 		echo \'use strict\'\;) \
 			>$(CURDIR)/debian/build/angular.js-head
 	ln -s $(CURDIR)/debian/smash-angularSrc.js $(CURDIR)
-	smash $(CURDIR)/smash-angularSrc.js | egrep -v 'use strict' \
+	smash $(CURDIR)/smash-angularSrc.js | egrep -a -v 'use strict' \
 		>$(CURDIR)/debian/build/angular.js-body
 	cat $(CURDIR)/debian/build/angular.js-head \
 		$(CURDIR)/debian/build/angular.js-body \
@@ -111,7 +111,7 @@ override_dh_auto_build:
 	(cat $(CURDIR)/src/module.prefix && \
 		echo \'use strict\'\;) \
 			>$(CURDIR)/debian/build/angular.js-module_head
-	smash $(CURDIR)/smash-ngRoute.js | egrep -v 'use strict' \
+	smash $(CURDIR)/smash-ngRoute.js | egrep -a -v 'use strict' \
 		>$(CURDIR)/debian/build/angular.js-route_body
 	cat $(CURDIR)/debian/build/angular.js-module_head \
 		$(CURDIR)/debian/build/angular.js-route_body | \
@@ -123,7 +123,7 @@ override_dh_auto_build:
 
 	# angular-sanitize.js
 	ln -s $(CURDIR)/debian/smash-ngSanitize.js $(CURDIR)
-	smash $(CURDIR)/smash-ngSanitize.js | egrep -v 'use strict' \
+	smash $(CURDIR)/smash-ngSanitize.js | egrep -a -v 'use strict' \
 		>$(CURDIR)/debian/build/angular.js-sanitize_body
 	cat $(CURDIR)/debian/build/angular.js-module_head \
 		$(CURDIR)/debian/build/angular.js-sanitize_body | \
@@ -135,7 +135,7 @@ override_dh_auto_build:
 
 	# angular-touch.js
 	ln -s $(CURDIR)/debian/smash-ngTouch.js $(CURDIR)
-	smash $(CURDIR)/smash-ngTouch.js | egrep -v 'use strict' \
+	smash $(CURDIR)/smash-ngTouch.js | egrep -a -v 'use strict' \
 		>$(CURDIR)/debian/build/angular.js-touch_body
 	cat $(CURDIR)/debian/build/angular.js-module_head \
 		$(CURDIR)/debian/build/angular.js-touch_body | \
@@ -147,10 +147,10 @@ override_dh_auto_build:
 
 	# angular-loader.js
 	ln -s $(CURDIR)/debian/smash-angularLoader.js $(CURDIR)
-	((cat $(CURDIR)/src/loader.prefix | egrep -v  'use strict') && \
+	((cat $(CURDIR)/src/loader.prefix | egrep -a -v  'use strict') && \
 		echo \'use strict\'\;) \
 			>$(CURDIR)/debian/build/angular.js-loader_head
-	smash $(CURDIR)/smash-angularLoader.js | egrep -v 'use strict' \
+	smash $(CURDIR)/smash-angularLoader.js | egrep -a -v 'use strict' \
 		>$(CURDIR)/debian/build/angular.js-loader_body
 	cat $(CURDIR)/debian/build/angular.js-loader_head \
 		$(CURDIR)/debian/build/angular.js-loader_body | \
@@ -165,7 +165,7 @@ override_dh_auto_build:
 # - needs a much newer jQuery (2.1.1) that is in the archives
 # - going to be deprecated soon in favor of protractor
 #	ln -s $(CURDIR)/debian/smash-angularScenario.js $(CURDIR)
-#	smash $(CURDIR)/smash-angularScenario.js | egrep -v 'use strict' \
+#	smash $(CURDIR)/smash-angularScenario.js | egrep -a -v 'use strict' \
 #		>$(CURDIR)/debian/build/angular.js-scenario_body
 #		cat $(CURDIR)/debian/build/angular.js-scenario_body | \
 #		sed -e 's/"NG_VERSION_FULL"/$(VERSION)/' \
