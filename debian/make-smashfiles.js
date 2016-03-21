@@ -10,7 +10,6 @@ function smashlist(mn, files) {
 	s += 'import "' + fn + '";\n';
     }
     if (! mn.match('angularSrc')) {
-	console.log(mn);
 	s += 'import "src/module.suffix";\n';
     }
     return s;
